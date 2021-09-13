@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+service Classifier {
+    rpc GetClassification(Domain) returns (Classification) {}
+}
+
+message Domain {
+    string fqdn = 1;
+}
+
+message Classification {
+    string fqdn = 1;
+    string binary_classification = 2;
+}

@@ -1,0 +1,14 @@
+apiVersion: skaffold/v2beta16
+kind: Config
+metadata:
+  name: dgad
+build:
+  artifacts:
+  - image: 
+    docker:
+      dockerfile: Dockerfile
+deploy:
+  kubectl:
+    manifests:
+    - skaffold/deployment.yaml
+    - skaffold/svc-clusterIP.yaml
