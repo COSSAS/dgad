@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dgad
+  name: dgad
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dgad
+  template:
+    metadata:
+      labels:
+        app: dgad
+    spec:
+      containers:
+      - image: registry.gitlab.com/cossas/dgad:v3.0.4
+        name: dgad
+        command: ["python"]
+        args: ["dgad/grpc/classifier_server.py"]

@@ -1,0 +1,24 @@
+include:
+  - project: 'ci/templates'
+    file: 'templates/python-docker.yml'
+    ref: 'beta'
+
+variables:
+  PYTHON_PACKAGE: dgad
+
+dgad-cli:
+  stage: test
+  script:
+    - which dgad
+    - dgad --domain wikipedia.org
+    - dgad --domains wikipedia.org sjdkahflaksdjhf.net
+    - dgad --csv tests/data/domains_todo.csv
+
+python:safety:
+  allow_failure: true
+
+python:bandit:
+  allow_failure: true
+
+grype:
+  allow_failure: true
