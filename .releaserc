@@ -1,0 +1,22 @@
+{
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    ["@semantic-release/git", {
+        "assets": [
+            "CHANGELOG.md",
+            "readme.md",
+            "pyproject.toml",
+            "skaffold/deployment.yaml",
+            "skaffold.yaml",
+            "tbump.toml",
+            "race/docker-compose.yml",
+            "race/readme.md",
+            "redis-worker/pyproject.toml"
+        ],
+        "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
+        }],
+    "@semantic-release/gitlab"
+  ]
+}

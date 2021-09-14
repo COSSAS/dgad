@@ -1,0 +1,25 @@
+include:
+  - project: 'notno/ci-templates'
+    file: 'pipelines/docker.yml'
+    ref: 'beta'
+  - project: 'notno/ci-templates'
+    file: 'pipelines/python.yml'
+    ref: 'beta'
+
+variables:
+  PYTHON_PACKAGE: dgad_redis_worker
+  GITLAB_RECOMMENDED_AUTO_FIX: "true"
+  KANIKO_REGISTRY_IMAGE: ${CI_REGISTRY_IMAGE}/redis-worker
+  KANIKO_CONTEXT: ${CI_PROJECT_DIR}/redis-worker
+  KANIKO_DOCKERFILE: ${CI_PROJECT_DIR}/redis-worker/Dockerfile
+
+before_script:
+  - cd redis-worker
+
+python:pytest:
+  rules:
+    - when: never
+
+python:mypy:
+  rules:
+    - when: never

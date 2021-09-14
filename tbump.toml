@@ -2,7 +2,7 @@
 # github_url = "https://github.com/<user or organization>/<project>/"
 
 [version]
-current = "3.0.4"
+current = "3.0.5"
 
 # Example of a semver regexp.
 # Make sure this matches current_version before
@@ -30,6 +30,14 @@ src = "pyproject.toml"
 src = "skaffold/deployment.yaml"
 [[file]]
 src = "skaffold.yaml"
+[[file]]
+src = "tbump.toml"
+[[file]]
+src = "race/docker-compose.yml"
+[[file]]
+src = "race/readme.md"
+[[file]]
+src = "redis-worker/pyproject.toml"
 
 # You can specify a list of commands to
 # run after the files have been patched

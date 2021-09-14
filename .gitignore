@@ -27,3 +27,4 @@ config.env
 dist
 tmp
 .venv
+*cache*
