@@ -11,11 +11,11 @@ python = "^3.6.1"
 pandas = "^1.1.5"
 tldextract = "^3.1.0"
 redis = "^3.5.3"
-tensorflow = "^2.4.0"
 numpy = "^1.19.5"
 keras-tcn = "^3.2.1"
 grpcio = "^1.34"
 pip = "^21.1.2"
+tensorflow-cpu = "^2.6.0"
 
 [tool.poetry.dev-dependencies]
 black = "^20.8b1"
@@ -52,5 +52,14 @@ build_command = "pip install poetry && poetry build"
 safe_licenses = [
     "Apache Software License",
     "MIT License",
-    "BSD License"
+    "BSD License",
+    "Apache 2.0",
+    "MIT",
+    "Python Software Foundation License",
+    "3-Clause BSD License",
+    "Public Domain",
+    "BSD",
+    "Mozilla Public License 2.0 (MPL 2.0)",
+    "University of Illinois/NCSA Open Source License",
+    "GNU Lesser General Public License v3 or later (LGPLv3+)"
 ]

@@ -14,7 +14,7 @@
 # recommended: use a virtual environment
 python -m venv dgad
 source dgad/bin/activate
-add pip install git+https://gitlab.com/cossas/dgad.git
+pip install git+https://gitlab.com/cossas/dgad.git
 ```
 
 ## CLI

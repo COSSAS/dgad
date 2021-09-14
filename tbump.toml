@@ -28,6 +28,8 @@ src = "readme.md"
 src = "pyproject.toml"
 [[file]]
 src = "skaffold/deployment.yaml"
+[[file]]
+src = "skaffold.yaml"
 
 # You can specify a list of commands to
 # run after the files have been patched

@@ -5,6 +5,7 @@ include:
 
 variables:
   PYTHON_PACKAGE: dgad
+  GITLAB_RECOMMENDED_AUTO_FIX: "true"
 
 dgad-cli:
   stage: test

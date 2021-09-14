@@ -1,5 +1,4 @@
-FROM ubuntu:latest
-RUN apt -y update && apt install -y python3 python3-pip
+FROM python:3.9-slim
 WORKDIR /project
 COPY pyproject.toml .
 COPY dgad dgad
