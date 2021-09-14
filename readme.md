@@ -1,4 +1,4 @@
-# DGA Detective
+# DGA Detective v3.0.4
 
 * Python package to perform DGA domain classification
 * Can be used:
@@ -56,7 +56,7 @@ $ dgad --csv your_csv_file.csv
 ## Development
 
 Requirements:
-* python >= 3.6.1
+* python >= 3.7
 * [poetry](https://python-poetry.org)
 
 ```bash
