@@ -15,7 +15,7 @@ spec:
         app: dgad
     spec:
       containers:
-      - image: registry.gitlab.com/cossas/dgad:v3.0.4
+      - image: registry.gitlab.com/cossas/dgad:v3.0.5
         name: dgad
-        command: ["python"]
+        command: ["python3"]
         args: ["dgad/grpc/classifier_server.py"]

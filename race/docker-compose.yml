@@ -1,0 +1,20 @@
+services:
+    grpc_detective:
+        image: registry.gitlab.com/cossas/dgad:v3.0.5
+        entrypoint: ""
+        command: python dgad/grpc/classifier_server.py
+        deploy:
+            replicas: 1
+        env_file:
+            - config.env
+        restart: always
+
+    redis_worker:
+        image: registry.gitlab.com/cossas/dgad/redis_worker:v3.0.5
+        env_file:
+            - config.env
+        environment:
+            DGAD_GRPC_HOST: grpc_detective
+        deploy:
+            replicas: 1
+        restart: always

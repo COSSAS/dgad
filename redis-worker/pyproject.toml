@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "dgad_redis_worker"
+version = "3.0.5"
+description = ""
+authors = ["Federico Falconieri <federico.falconieri@tno.nl>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+redis = "^3.5.3"
+dgad = { git = "https://gitlab.com/cossas/dgad.git"}
+
+[tool.poetry.dev-dependencies]
+pytest-redis = "^2.1.1"
+pytest = "^6.2.4"
+mypy = "^0.812"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.semantic_release]
+version_pattern = [
+    'pyproject.toml:version = "(\d+\.\d+\.\d+)"'
+]

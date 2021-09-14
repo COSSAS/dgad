@@ -14,3 +14,12 @@ dgad-cli:
     - dgad --domain wikipedia.org
     - dgad --domains wikipedia.org sjdkahflaksdjhf.net
     - dgad --csv tests/data/domains_todo.csv
+
+redis-worker:
+  stage: build
+  inherit:
+    variables: false
+  trigger:
+    include:
+      - local: redis-worker/.gitlab-ci.yml
+    strategy: depend
