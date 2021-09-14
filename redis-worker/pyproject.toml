@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dgad_redis_worker"
-version = "3.0.5"
+version = "3.1.0"
 description = ""
 authors = ["Federico Falconieri <federico.falconieri@tno.nl>"]
 

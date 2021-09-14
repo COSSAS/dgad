@@ -1,4 +1,4 @@
-# DGA Detective v3.0.5
+# DGA Detective v3.1.0
 
 * Python package to perform DGA domain classification
 * Can be used:
