@@ -1,4 +1,5 @@
-This is a push mirror of https://gitlab.com/cossas/dgad
+* This is a push mirror of https://gitlab.com/cossas/dgad
+* For issues/contributions check the [CONTRIBUTING.md](CONTRIBUTING.md)
 
 # DGA Detective v3.1.0
 
