@@ -1,10 +1,10 @@
-FROM python:3.9-slim as builder
+FROM python:3.10-slim as builder
 WORKDIR /project
 COPY pyproject.toml .
 COPY dgad dgad
 RUN pip install --prefix=/install .
 
-FROM python:3.9-slim
+FROM python:3.10-slim
 COPY --from=builder /install /usr/local
 WORKDIR /project
 COPY dgad dgad
