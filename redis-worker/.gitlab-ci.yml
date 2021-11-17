@@ -23,3 +23,7 @@ python:pytest:
 python:mypy:
   rules:
     - when: never
+
+python:pylint:
+  rules:
+    - when: never

@@ -1,11 +1,21 @@
 include:
-  - project: 'notno/ci-templates'
+  - project: 'just-ci/templates'
     file: 'templates/python-docker.yml'
-    ref: 'beta'
+    ref: 'v4.0.1'
 
 variables:
   PYTHON_PACKAGE: dgad
+  PYVERSION: "3.9"
   GITLAB_RECOMMENDED_AUTO_FIX: "true"
+  SNYK_TEST_SEVERITY_THRESHOLD: high  # low|medium|high|critical
+  SNYK_CODE_SEVERITY_THRESHOLD: high  # low|medium|high|critical
+  SNYK_CONTAINER_SEVERITY_THRESHOLD: high  # low|medium|high|critical
+  SNYK_TEST_FAIL_ON: patchable  # all|upgradable|patchable
+  SNYK_CODE_FAIL_ON: patchable  # all|upgradable|patchable
+  SNYK_CONTAINER_FAIL_ON: patchable  # all|upgradable|patchable
+  # all - fails when there is at least one vulnerability that can be either upgraded or patched.
+  # upgradable - fails when there is at least one vulnerability that can be upgraded.
+  # patchable - fails when there is at least one vulnerability that can be patched.
 
 dgad-cli:
   stage: test
@@ -23,3 +33,39 @@ redis-worker:
     include:
       - local: redis-worker/.gitlab-ci.yml
     strategy: depend
+
+grype:
+  rules:
+    - when: never
+
+.snyk:
+  stage: test
+  image:
+    name: snyk/snyk-cli:python-3
+    entrypoint: [""]
+  before_script:
+    - snyk auth $SNYK_TOKEN
+
+# dependencies and their licenses
+snyk:dependencies:
+  extends: .snyk
+  script:
+    - snyk test --fail-on=${SNYK_TEST_FAIL_ON} --severity-threshold=${SNYK_TEST_SEVERITY_THRESHOLD}
+
+# SAST
+snyk:code:
+  extends: .snyk
+  script:
+    - snyk code test --fail-on=${SNYK_CODE_FAIL_ON} --severity-threshold=${SNYK_CODE_SEVERITY_THRESHOLD}
+
+# OCI
+snyk:container:strict:
+  extends: .snyk
+  script:
+    - snyk container test --fail-on=${SNYK_CONTAINER_FAIL_ON} --severity-threshold=${SNYK_CONTAINER_SEVERITY_THRESHOLD} ${KANIKO_REGISTRY_IMAGE}:${KANIKO_DEV_TAG} --username=${CI_REGISTRY_USER} --password=${CI_REGISTRY_PASSWORD} --file=${KANIKO_DOCKERFILE}
+
+# OCI excluding base image
+snyk:container:nobase:
+  extends: .snyk
+  script:
+    - snyk container test --fail-on=${SNYK_CONTAINER_FAIL_ON} --severity-threshold=${SNYK_CONTAINER_SEVERITY_THRESHOLD} ${KANIKO_REGISTRY_IMAGE}:${KANIKO_DEV_TAG} --username=${CI_REGISTRY_USER} --password=${CI_REGISTRY_PASSWORD} --file=${KANIKO_DOCKERFILE} --exclude-base-image-vulns

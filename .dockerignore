@@ -1,0 +1,6 @@
+.venv
+race
+redis-worker
+skaffold
+tests
+dist

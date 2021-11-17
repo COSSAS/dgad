@@ -7,7 +7,7 @@ license = "Apache-2.0"
 include = ["dgad/models/*.h5"]
 
 [tool.poetry.dependencies]
-python = "^3.6.1"
+python = ">=3.6.1,<3.10"
 pandas = "^1.1.5"
 tldextract = "^3.1.0"
 redis = "^3.5.3"
@@ -26,7 +26,6 @@ bandit = "^1.7.0"
 pylint-junit = "^0.3.2"
 safety = "^1.9.0"
 mypy = "^0.800"
-python-semantic-release = "^7.13.2"
 vulture = "^2.3"
 pre-commit = "^2.11.1"
 isort = "^5.8.0"
@@ -36,6 +35,8 @@ grpcio-tools = "^1.34"
 wheel-inspect = "^1.7.0"
 pylic = "^2.0.8"
 tbump = "^6.3.2"
+build = "^0.7.0"
+twine = "^3.6.0"
 
 [tool.poetry.scripts]
 dgad = 'dgad.app.cli:main'
@@ -60,6 +61,4 @@ safe_licenses = [
     "Public Domain",
     "BSD",
     "Mozilla Public License 2.0 (MPL 2.0)",
-    "University of Illinois/NCSA Open Source License",
-    "GNU Lesser General Public License v3 or later (LGPLv3+)"
 ]
