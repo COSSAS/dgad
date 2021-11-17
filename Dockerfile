@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.9-slim
 RUN pip install poetry
 ENV POETRY_VIRTUALENVS_CREATE=false
 
