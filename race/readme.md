@@ -48,5 +48,5 @@ flowchart LR
 
 Please notice:
 * This is a convenience asynchronous pipeline to make the classification of large amounts of domains simple for the user. The user just needs to add its domains to redis, rather than interact directly with the dga detective api. Due to the asynchronous nature of this architecture, it can take several seconds for domains to be picked up by a worker. This is normal.
-* For synchronous scenarios (or if you want to use something other than redis for storage) you can interact directly with the dga detective server through the gRPC api exposed. The redis workers do exactly this under the hood. Dga detective provides [example client code in python](https://gitlab.com/cossas/dgad/-/blob/v3.1.0/dgad/grpc/classifier_client.py) to interact with a deployed server.
+* For synchronous scenarios (or if you want to use something other than redis for storage) you can interact directly with the dga detective server through the gRPC api exposed. The redis workers do exactly this under the hood. Dga detective provides [example client code in python](https://gitlab.com/cossas/dgad/-/blob/v3.1.1/dgad/grpc/classifier_client.py) to interact with a deployed server.
 * you can scale the redis workers and the grpc servers indipendently

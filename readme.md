@@ -1,7 +1,7 @@
 * This is a push mirror of https://gitlab.com/cossas/dgad
 * For issues/contributions check the [CONTRIBUTING.md](CONTRIBUTING.md)
 
-# DGA Detective v3.1.0
+# DGA Detective v3.1.1
 
 * Python package to perform DGA domain classification
 * Can be used:

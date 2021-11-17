@@ -4,7 +4,7 @@ metadata:
   name: dgad
 build:
   artifacts:
-  - image: registry.gitlab.com/cossas/dgad:v3.1.0
+  - image: registry.gitlab.com/cossas/dgad:v3.1.1
     docker:
       dockerfile: Dockerfile
 deploy:
