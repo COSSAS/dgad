@@ -1,15 +1,15 @@
-FROM python:3.9-slim as builder
-WORKDIR /project
-COPY pyproject.toml .
-COPY dgad dgad
-RUN pip install --prefix=/install .
+FROM python:3.9
+RUN pip install poetry
+ENV POETRY_VIRTUALENVS_CREATE=false
 
-FROM python:3.9-slim
-COPY --from=builder /install /usr/local
 WORKDIR /project
-COPY dgad dgad
-COPY tests/*.py tests/
-COPY tests/data tests/data
+COPY poetry.lock pyproject.toml ./
+COPY dgad/__init__.py dgad/__init__.py
+RUN poetry install --no-dev
+
+COPY dgad/ dgad/
+RUN dgad --help
+
 ENV TF_CPP_MIN_LOG_LEVEL=3
 ENTRYPOINT [ "dgad"]
 CMD [ "-h" ]

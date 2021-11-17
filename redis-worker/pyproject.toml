@@ -7,7 +7,7 @@ authors = ["Federico Falconieri <federico.falconieri@tno.nl>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 redis = "^3.5.3"
-dgad = { git = "https://gitlab.com/cossas/dgad.git"}
+dgad = "^3.1.0"
 
 [tool.poetry.dev-dependencies]
 pytest-redis = "^2.1.1"
