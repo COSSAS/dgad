@@ -23,8 +23,6 @@ tag_template = "v{new_version}"
 # section containing the path of the file, relative to the
 # tbump.toml location.
 [[file]]
-src = "readme.md"
-[[file]]
 src = "pyproject.toml"
 [[file]]
 src = "skaffold/deployment.yaml"
