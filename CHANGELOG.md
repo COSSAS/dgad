@@ -1,3 +1,10 @@
+## [3.1.3](https://gitlab.com/cossas/dgad/compare/v3.1.2...v3.1.3) (2022-02-17)
+
+
+### Bug Fixes
+
+* Dockerfile, kaniko and update CI from v5.0.0 beta ([725fb47](https://gitlab.com/cossas/dgad/commit/725fb475a651c26e7afdfb6b0956d58674e2d35a))
+
 ## [3.1.2](https://gitlab.com/cossas/dgad/compare/v3.1.1...v3.1.2) (2021-11-17)
 
 
