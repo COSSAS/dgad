@@ -3,6 +3,7 @@ from typing import Optional
 
 import grpc
 import redis
+
 from dgad.grpc import classification_pb2, classification_pb2_grpc
 
 
