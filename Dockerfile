@@ -1,13 +1,9 @@
 FROM python:3.9-slim
-RUN pip install poetry
-ENV POETRY_VIRTUALENVS_CREATE=false
 
 WORKDIR /project
-COPY poetry.lock pyproject.toml ./
-COPY dgad/__init__.py dgad/__init__.py
-RUN poetry install --no-dev
-
+COPY pyproject.toml ./
 COPY dgad/ dgad/
+RUN pip install .
 RUN dgad --help
 
 ENV TF_CPP_MIN_LOG_LEVEL=3
