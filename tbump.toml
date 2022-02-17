@@ -35,8 +35,6 @@ src = "tbump.toml"
 [[file]]
 src = "race/docker-compose.yml"
 [[file]]
-src = "race/readme.md"
-[[file]]
 src = "redis-worker/pyproject.toml"
 
 # You can specify a list of commands to
