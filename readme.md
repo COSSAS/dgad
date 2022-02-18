@@ -32,8 +32,8 @@ To install the DGA Detective, we recommend using a virtual environment:
 
 ```bash
 # recommended: use a virtual environment
-python -m venv dgad
-source dgad/bin/activate
+python -m venv .venv
+source .venv/bin/activate
 pip install dgad
 ```
 
