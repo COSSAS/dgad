@@ -28,3 +28,4 @@ dist
 tmp
 .venv
 *cache*
+poetry.lock
