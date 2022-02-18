@@ -34,7 +34,7 @@ To install the DGA Detective, we recommend using a virtual environment:
 # recommended: use a virtual environment
 python -m venv dgad
 source dgad/bin/activate
-pip install git+https://gitlab.com/cossas/dgad.git
+pip install dgad
 ```
 
 ## How to use?
