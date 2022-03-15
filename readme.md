@@ -3,11 +3,11 @@
 
 
 ![https://cossas-project.org](https://img.shields.io/badge/website-cossas--project.org-orange)
-![Commits](https://gitlab.com/cossas/dgad/-/jobs/artifacts/master/raw/ci_badges/commits.svg)
+![Commits](https://gitlab.com/cossas/dgad/-/jobs/artifacts/master/raw/ci_badges/commits.svg?job=badge:commits)
 ![Pipeline status](https://gitlab.com/cossas/dgad/badges/master/pipeline.svg)
-![Version](https://gitlab.com/cossas/dgad/-/jobs/artifacts/README/raw/version.svg?job=create_badge_svg)
-![License: MPL2.0](https://gitlab.com/cossas/dgad/-/jobs/artifacts/README/raw/license.svg?job=create_badge_svg)
-![Code-style](https://gitlab.com/cossas/dgad/-/jobs/artifacts/README/raw/code-style.svg?job=create_badge_svg)
+![Version](https://gitlab.com/cossas/dgad/-/jobs/artifacts/master/raw/ci_badges/version.svg?job=badge:version)
+![License: MPL2.0](https://gitlab.com/cossas/dgad/-/jobs/artifacts/master/raw/ci_badges/license.svg?job=badge:license)
+![Code-style](https://gitlab.com/cossas/dgad/-/jobs/artifacts/master/raw/ci_badges/codestyle.svg?job=badge:codestyle)
 </div></a>
 
 <hr style="border:2px solid gray"> </hr>
