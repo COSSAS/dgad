@@ -41,31 +41,6 @@ python:twine:pypi:
   rules:
     - if: ($CI_COMMIT_TAG =~ /^v[0-9]+(\.[0-9]+){2}(.*)$/)
 
-# # TODO: move to just-ci/templates
-# anybadge:
-#   stage: build
-#   image: python:3.6.6
-#   tags:
-#     - docker
-#   script:
-#     - echo "Python other dependencies installation"
-#   after_script:
-#     - pip install anybadge
-#     - commits=$(git rev-list --all --count)
-#     - anybadge -l commits -v $commits -f commits.svg -c green
-#     - anybadge --value=Apache-2.0 -c orange -f license.svg --label=license
-#     - last_tag=$(git describe --tags)
-#     - anybadge -v $last_tag --label=version -c blue -f version.svg
-#     - anybadge --value=black --label="code style" -c black -f code-style.svg
-#   artifacts:
-#     paths:
-#         - commits.svg
-#         - license.svg
-#         - version.svg
-#         - code-style.svg
-#     when: always
-#     expire_in: 2 weeks
-
 badge:commits:
   extends: .badge
   variables:
@@ -73,6 +48,8 @@ badge:commits:
     VALUE: $(git rev-list --all --count)
     COLOR: "green"
     URL: "${CI_PROJECT_URL}"
+  rules:
+    - when: always
 
 badge:license:
   extends: .badge
@@ -80,4 +57,20 @@ badge:license:
     LABEL: "license"
     VALUE: Apache-2.0
     COLOR: "orange"
+    URL: "${CI_PROJECT_URL}"
+
+badge:version:
+  extends: .badge
+  variables:
+    LABEL: "version"
+    VALUE: $(git describe --tags)
+    COLOR: "blue"
+    URL: "${CI_PROJECT_URL}"
+
+badge:codestyle:
+  extends: .badge
+  variables:
+    LABEL: "code style"
+    VALUE: "black"
+    COLOR: "black"
     URL: "${CI_PROJECT_URL}"
