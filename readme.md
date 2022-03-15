@@ -86,7 +86,7 @@ $ dgad --csv your_csv_file.csv
 
 **Server**
 
-To initialze a DGA Detective server listening on port `50054`
+To initialize a DGA Detective server listening on port `50054`
 ```bash
 # listens by default on port 50054
 python dgad/grpc/classifier_server.py

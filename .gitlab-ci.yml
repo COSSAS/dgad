@@ -2,6 +2,8 @@ include:
   - project: 'just-ci/templates'
     file: 'templates/container/python.yml'
     ref: 'v5.0.0-beta.9'
+  - project: 'just-ci/project-automation'
+    file: 'project-automation/badge.yml'
 
 variables:
   PYTHON_PACKAGE: 'dgad'
@@ -63,3 +65,20 @@ anybadge:
         - code-style.svg
     when: always
     expire_in: 2 weeks
+
+badge:commits:
+  extends: .badge
+  before_script: commits=$(git rev-list --all --count)
+  variables:
+    LABEL: "commits"
+    VALUE: $commits
+    COLOR: "green"
+    URL: "${CI_PROJECT_URL}"
+
+badge:license:
+  extends: .badge
+  variables:
+    LABEL: "license"
+    VALUE: Apache-2.0
+    COLOR: "orange"
+    URL: "${CI_PROJECT_URL}"
