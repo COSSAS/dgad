@@ -45,7 +45,7 @@ badge:commits:
   extends: .badge
   variables:
     LABEL: "commits"
-    VALUE: $(git rev-list --all --count)
+    VALUE: "git rev-list --all --count"
     COLOR: "green"
     URL: "${CI_PROJECT_URL}"
 
@@ -61,7 +61,7 @@ badge:version:
   extends: .badge
   variables:
     LABEL: "version"
-    VALUE: $(git describe --tags)
+    VALUE: "git describe --tags"
     COLOR: "blue"
     URL: "${CI_PROJECT_URL}"
 
