@@ -1,3 +1,10 @@
+## [3.1.4](https://gitlab.com/cossas/dgad/compare/v3.1.3...v3.1.4) (2022-04-19)
+
+
+### Bug Fixes
+
+* badges with just-ci job ([34388fa](https://gitlab.com/cossas/dgad/commit/34388fa6cc0c5d5d859a7f5d0aa7825331110c94))
+
 ## [3.1.3](https://gitlab.com/cossas/dgad/compare/v3.1.2...v3.1.3) (2022-02-17)
 
 
