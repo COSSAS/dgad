@@ -74,3 +74,19 @@ badge:version:
     VALUE: "${LATEST_TAG}"
     COLOR: "blue"
     URL: "${CI_PROJECT_URL}"
+
+badge:license:
+  extends: .badge
+  variables:
+    LABEL: "license"
+    VALUE: "MPL2.0"
+    COLOR: "orange"
+    URL: "${CI_PROJECT_URL}"
+
+badge:codestyle:
+  extends: .badge
+  variables:
+    LABEL: "codestyle"
+    VALUE: "black"
+    COLOR: "black"
+    URL: "${CI_PROJECT_URL}"
