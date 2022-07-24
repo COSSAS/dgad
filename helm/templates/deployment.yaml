@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: {{ .Chart.Name }}
-        image: {{ .Values.image.repository | default "registry.gitlab.com/cossas/dgad" }}:{{ .Values.image.tag | default "3.1.4" }}
+        image: {{ .Values.image.repository | default "registry.gitlab.com/cossas/dgad" }}:{{ .Values.image.tag | default "4.0.0" }}
         args: ["serve", "-p", {{ .Values.containerPort | quote }} ]
         ports:
           - containerPort: {{ .Values.containerPort }}
