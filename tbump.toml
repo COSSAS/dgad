@@ -34,6 +34,10 @@ src = "tbump.toml"
 src = "race/docker-compose.yml"
 [[file]]
 src = "redis-worker/pyproject.toml"
+[[file]]
+src = "Chart.yaml"
+[[file]]
+src = "values.yaml"
 
 # You can specify a list of commands to
 # run after the files have been patched

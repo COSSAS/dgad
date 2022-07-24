@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Release.Name }}-detective"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  replicas: {{ .Values.replicas | default 1 }}
+  selector:
+    matchLabels:
+      app: "{{ .Release.Name }}-detective"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Release.Name }}-detective"
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image.repository | default "registry.gitlab.com/cossas/dgad" }}:{{ .Values.image.tag }}
+        args: ["serve", "-p", {{ .Values.containerPort | quote }} ]
+        ports:
+          - containerPort: {{ .Values.containerPort }}
+        resources:
+          requests:
+            memory: {{ .Values.requests.memory | default "500Mi" | quote }}
+            cpu: {{ .Values.requests.cpu | default "1000m" | quote }}
+          limits:
+            memory: {{ .Values.limits.memory | default "500Mi" | quote }}
+            cpu: {{ .Values.limits.cpu | default "1000m" | quote }}

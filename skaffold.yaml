@@ -1,14 +1,25 @@
-apiVersion: skaffold/v2beta16
+apiVersion: skaffold/v2beta28
 kind: Config
 metadata:
   name: dgad
 build:
+  local:
+    push: false
+    concurrency: 1
+    tryImportMissing: false
+    useDockerCLI: false
   artifacts:
-  - image: registry.gitlab.com/cossas/dgad:v3.1.4
+  - image: registry.gitlab.com/cossas/dgad
     docker:
       dockerfile: Dockerfile
 deploy:
-  kubectl:
-    manifests:
-    - skaffold/deployment.yaml
-    - skaffold/svc-clusterIP.yaml
+  helm:
+    releases:
+      - name: dgad
+        chartPath: ./helm
+        artifactOverrides:
+          image: registry.gitlab.com/cossas/dgad
+        imageStrategy:
+          helm: {}
+        valuesFiles:
+          - ./helm/values.yaml
