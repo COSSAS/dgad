@@ -1,7 +1,7 @@
 include:
   - project: 'just-ci/templates'
     file: 'templates/container/python.yml'
-    ref: 'v5.2.0'
+    ref: 'v5.4.0'
   - project: 'just-ci/templates'
     file: 'project-automation/badge.yml'
 
@@ -9,20 +9,16 @@ variables:
   PYTHON_PACKAGE: 'dgad'
   KANIKO_EXTRA_ARGS: "--use-new-run --single-snapshot"
 
-dgad-cli:
-  stage: test
-  script:
-    - which dgad
-    - dgad --domain wikipedia.org
-    - dgad --domains wikipedia.org sjdkahflaksdjhf.net
-    - dgad --csv tests/data/domains_todo.csv
-
 kaniko:redis-worker:
   extends: .kaniko
   variables:
     KANIKO_REGISTRY_IMAGE: ${CI_REGISTRY_IMAGE}/redis-worker
     KANIKO_CONTEXT: ${CI_PROJECT_DIR}/redis-worker
     KANIKO_DOCKERFILE: ${CI_PROJECT_DIR}/redis-worker/Dockerfile
+
+python:pytest:
+  variables:
+    DEFAULT_ARGS: "-vvv --color=yes"
 
 # FIXME
 python:mypy:

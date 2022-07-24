@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ .Release.Name }}-detective"
+  namespace: {{ .Release.Namespace }}
+spec:
+  ports:
+    - port: {{ .Values.containerPort }}
+      protocol: TCP
+  selector:
+    app: "{{ .Release.Name }}-detective"

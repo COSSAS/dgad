@@ -1,0 +1,11 @@
+replicas: 1
+image:
+  repository: registry.gitlab.com/cossas/dgad
+  tag: "latest"
+containerPort: 4714
+requests:
+  memory: ""
+  cpu: ""
+limits:
+  memory: ""
+  cpu: ""

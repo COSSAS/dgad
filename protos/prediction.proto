@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+service Classifier {
+    rpc GetClassification(Domain) returns (Domain) {}
+}
+
+message Word {
+    string value = 1;
+    float binary_score = 2;
+    string binary_label = 3;
+    float family_score = 4;
+    string family_label = 5;
+}
+
+message Domain {
+    string fqdn = 1;
+    bool is_dga = 2;
+    string family = 3;
+    repeated Word words = 4;
+}
