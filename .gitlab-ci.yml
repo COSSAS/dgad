@@ -51,13 +51,13 @@ prepare:badges:
     reports:
       dotenv: badges.env
   rules:
-    - if: ${CI_COMMIT_REF_NAME} == ${CI_DEFAULT_BRANCH}
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 .badge:
   needs: ["prepare:badges"]
   stage: .post
   rules:
-    - if: ${CI_COMMIT_REF_NAME} == ${CI_DEFAULT_BRANCH}
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 badge:commits:
   extends: .badge
