@@ -54,7 +54,7 @@ prepare:badges:
     - if: ${CI_COMMIT_REF_NAME} == ${CI_DEFAULT_BRANCH}
 
 .badge:
-  needs: [prepare:badges]
+  needs: ["prepare:badges"]
   stage: .post
   rules:
     - if: ${CI_COMMIT_REF_NAME} == ${CI_DEFAULT_BRANCH}
