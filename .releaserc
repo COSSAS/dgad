@@ -1,22 +1,29 @@
 {
+  "tagFormat": "${version}",
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
-    "@semantic-release/changelog",
+    "@semantic-release/gitlab",
+    ["@semantic-release/exec", {
+      "prepareCmd": "tbump ${nextRelease.version} --only-patch --non-interactive"
+    }],
     ["@semantic-release/git", {
-        "assets": [
-            "CHANGELOG.md",
-            "readme.md",
-            "pyproject.toml",
-            "skaffold/deployment.yaml",
-            "skaffold.yaml",
-            "tbump.toml",
-            "race/docker-compose.yml",
-            "race/readme.md",
-            "redis-worker/pyproject.toml"
-        ],
-        "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
-        }],
-    "@semantic-release/gitlab"
+      "assets": ["**/*"],
+      "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
+    }]
+  ],
+  "branches": [
+    "+([0-9])?(.{+([0-9]),x}).x",
+    "master",
+    "next",
+    "next-major",
+    {
+      "name": "beta",
+      "prerelease": true
+    },
+    {
+      "name": "alpha",
+      "prerelease": true
+    }
   ]
 }

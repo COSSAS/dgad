@@ -86,3 +86,28 @@ badge:codestyle:
     VALUE: "black"
     COLOR: "black"
     URL: "${CI_PROJECT_URL}"
+
+### semantic-release
+
+check-GL-token:
+  rules:
+    - when: never
+
+find-next-release:
+  only:
+    - iwhishtherewasabetterway
+
+tbump:
+  rules:
+    - when: never
+
+semantic-release:
+  image: registry.gitlab.com/just-ci/images/node:latest
+  stage: .post
+  before_script:
+    - apk add python3 py-pip
+    - pip install tbump
+  script:
+    - semantic-release
+  rules:
+    - if: $CI_COMMIT_BRANCH
