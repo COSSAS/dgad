@@ -23,7 +23,7 @@ def validate_families_number(ctx, param, value):
 
 
 def validate_file_format(ctx, param, value):
-    allowed = ["csv", "jsonl"]
+    allowed = ["csv", "jsonl", "txt"]
     if value not in allowed:
         raise click.BadParameter(f"must be one of {allowed}")
     else:
@@ -38,6 +38,8 @@ def input_domains_from_cli_filepath_or_buf(
         df = pd.read_csv(input_filepath_or_buf, index_col=False)
     elif format == "jsonl":
         df = pd.read_json(input_filepath_or_buf, lines=True)
+    elif format == "txt":
+        df = pd.read_csv(input_filepath_or_buf, names=[domains_column])
     if not df.empty:
         try:
             domains_set = set(df[domains_column].tolist())

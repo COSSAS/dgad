@@ -1,9 +1,8 @@
 test:
-	python dgad/cli.py -ft csv -f tests/data/domains_todo.csv
-	python dgad/cli.py -f tests/data/domains_todo.csv
-	python dgad/cli.py -ft jsonl -f tests/data/domains_todo.jsonl
-	cat tests/data/domains_todo.csv | python dgad/cli.py -ft csv -f -
-	cat tests/data/domains_todo.jsonl | python dgad/cli.py -ft jsonl -f -
+	docker build -t dgad:test .
+	cat demo/domains.csv | docker run -i dgad:test client -fmt csv -f - | jq '{domain: .[0].raw, is_dga: .[0].is_dga}'
+	cat demo/domains.jsonl | docker run -i dgad:test client -fmt jsonl -f - | jq '{domain: .[0].raw, is_dga: .[0].is_dga}'
+	cat demo/domains.txt | docker run -i dgad:test client -fmt txt -f - | jq '{domain: .[0].raw, is_dga: .[0].is_dga}'
 
 clean:
 	black .

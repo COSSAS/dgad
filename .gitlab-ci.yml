@@ -24,6 +24,9 @@ python:pytest:
 python:mypy:
   allow_failure: true
 
+cli:test:
+  
+
 # TODO: move to just-ci/templates
 python:twine:pypi:
   image: registry.gitlab.com/just-ci/images/python:3.9
