@@ -6,6 +6,8 @@ include:
 variables:
   TWINE_USERNAME: __token__
   TWINE_PASSWORD: xxx
+  KANIKO_EXTRA_ARGS: "--use-new-run --single-snapshot"
+
 # TODO: move to just-ci/templates, with variables
 python:twine:pypi:
   image: registry.gitlab.com/just-ci/images/python:3.9
