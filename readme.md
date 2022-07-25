@@ -30,7 +30,9 @@ The DGA detective is able to tell whether a domain is created by such an algorit
 More information can be found on [cossas-project.org](https://cossas-project.org/portfolio/dgad/).
 
 ## Installation
-To install the DGA Detective, we recommend using a virtual environment:
+
+### Python
+To install the DGA Detective locally, we recommend using a virtual environment:
 
 ```bash
 # recommended: use a virtual environment
@@ -39,9 +41,18 @@ source .venv/bin/activate
 pip install dgad
 ```
 
+### Docker
+Otherwise, you can pull the docker image:
+
+```bash
+docker pull registry.gitlab.com/cossas/dgad:4.0.0
+```
+
 ## Usage
 
 ### CLI
+
+You can use the `dgad` CLI directly (if installed with `pip`) or through docker.
 
 ```bash
 # list available commands with
@@ -67,6 +78,7 @@ Commands:
 
 ```
 $ dgad client -d kajsdfhasdlkjfh.com
+$ docker run -i registry.gitlab.com/cossas/dgad:4.0.0 client -d kdsjhfalksdjf.com
 $ dgad client -d dsfjkhalsdkfj.com -o json
 $ dgad client -d wikipedia.org -d anotherdomain.com
 $ dgad client -f tests/data/domains_todo.csv --format csv
@@ -76,9 +88,22 @@ $ dgad client -f tests/data/domains_todo.csv --format csv --verbosity DEBUG
 
 #### CLI input/output
 
+`dgad` CLI can read domains from txt, csv, and jsonl files.
+You can find examples of these files in the `demo` top level directory.
+`csv` and `jsonl` files are expected to specify which column contains the domains.
+See the option `--domains_column` to set this parameter, which is `domain` by default.
+
 ```bash
 # you can pipe input data to the flag -f from another command
 $ cat tests/data/domains_todo.csv | dgad client -fmt csv -f -
+
+# this is especially  useful when using the cli through docker
+$ cat demo/domains.jsonl | docker run -i registry.gitlab.com/cossas/dgad:4.0.0 client -fmt jsonl -f -
+{
+  "domain": "python.org",
+  "is_dga": false
+}
+(...)
 
 # dgad outputs plain json, so you can easily pipe stdout to another command
 $ dgad client -f tests/data/domains_todo.csv -fmt csv | jq '{domain: .[0].raw, is_dga: .[0].is_dga}'
@@ -125,7 +150,7 @@ dgad client -r -h dgad.mydomain.com -p 443 -f tests/data/domains_todo.csv -fmt c
 ### as a python package in your code
 
 ```python
-# demo.py
+# demo/demo.py
 from dgad.prediction import Detective
 from dgad.utils import pretty_print
 

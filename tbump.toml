@@ -25,6 +25,8 @@ tag_template = "v{new_version}"
 [[file]]
 src = "pyproject.toml"
 [[file]]
+src = "readme.md
+[[file]]
 src = "helm/templates/deployment.yaml"
 [[file]]
 src = "helm/Chart.yaml"
