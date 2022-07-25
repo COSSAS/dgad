@@ -1,0 +1,49 @@
+stages:
+  - build
+  - test
+
+include:
+  - project: 'just-ci/templates'
+    file: 'container/kaniko.yml'
+    ref: 'v5.4.0'
+  - project: 'just-ci/templates'
+    file: 'python/black.yaml'
+    ref: 'v5.4.0'
+  - project: 'just-ci/templates'
+    file: 'python/mypy.yaml'
+    ref: 'v5.4.0'
+  - project: 'just-ci/templates'
+    file: 'python/pylint.yaml'
+    ref: 'v5.4.0'
+  - project: 'just-ci/templates'
+    file: 'python/pytest.yaml'
+    ref: 'v5.4.0'
+  - project: 'just-ci/templates'
+    file: 'python/safety.yaml'
+    ref: 'v5.4.0'
+  - local: 'ci/badges.yaml'
+
+variables:
+  PYTHON_PACKAGE: 'dgad'
+  KANIKO_EXTRA_ARGS: "--use-new-run --single-snapshot"
+
+image:
+  name: ${KANIKO_REGISTRY_IMAGE}:${KANIKO_DEV_TAG}
+  entrypoint: [""]
+
+python:pytest:
+  variables:
+    DEFAULT_ARGS: "-vvv --color=yes"
+
+# FIXME
+python:mypy:
+  allow_failure: true
+
+semantic-release:
+  image: registry.gitlab.com/just-ci/images/node:latest
+  stage: .post
+  before_script:
+    - apk add python3 py-pip
+    - pip install tbump
+  script:
+    - semantic-release

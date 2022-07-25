@@ -1,119 +1,23 @@
-include:
-  - project: 'just-ci/templates'
-    file: 'templates/container/python.yml'
-    ref: 'v5.4.0'
-  - project: 'just-ci/templates'
-    file: 'project-automation/badge.yml'
-
-variables:
-  PYTHON_PACKAGE: 'dgad'
-  KANIKO_EXTRA_ARGS: "--use-new-run --single-snapshot"
-
-kaniko:redis-worker:
-  extends: .kaniko
-  variables:
-    KANIKO_REGISTRY_IMAGE: ${CI_REGISTRY_IMAGE}/redis-worker
-    KANIKO_CONTEXT: ${CI_PROJECT_DIR}/redis-worker
-    KANIKO_DOCKERFILE: ${CI_PROJECT_DIR}/redis-worker/Dockerfile
-
-python:pytest:
-  variables:
-    DEFAULT_ARGS: "-vvv --color=yes"
-
-# FIXME
-python:mypy:
-  allow_failure: true
-
-
-# TODO: move to just-ci/templates
-python:twine:pypi:
-  image: registry.gitlab.com/just-ci/images/python:3.9
-  stage: .post
-  script:
-    - pip3 install twine build
-    - python3 -m build
-    - echo $TWINE_USERNAME
-    - echo $TWINE_PASSWORD
-    - twine upload --skip-existing --non-interactive dist/*
+workflow:
   rules:
-    - if: ($CI_COMMIT_TAG =~ /^[0-9]+(\.[0-9]+){2}(.*)$/)
-  needs: []
+    - if: $CI_MERGE_REQUEST_IID
+      when: never
+    - when: always
 
-# badges
-
-prepare:badges:
-  stage: build
-  image:
-    name: alpine/git
-    entrypoint: [""]
-  script:
-    - echo "COMMITS_COUNT=$(git rev-list --all --count)" >> badges.env
-    - echo "LATEST_TAG=$(git tag | sort -g | tail -1)" >> badges.env
-  artifacts:
-    reports:
-      dotenv: badges.env
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-
-.badge:
-  needs: ["prepare:badges"]
-  stage: .post
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-
-badge:commits:
-  extends: .badge
-  variables:
-    LABEL: "commits"
-    VALUE: "${COMMITS_COUNT}"
-    COLOR: "green"
-    URL: "${CI_PROJECT_URL}"
-
-badge:version:
-  extends: .badge
-  variables:
-    LABEL: "version"
-    VALUE: "${LATEST_TAG}"
-    COLOR: "blue"
-    URL: "${CI_PROJECT_URL}"
-
-badge:license:
-  extends: .badge
-  variables:
-    LABEL: "license"
-    VALUE: "MPL2.0"
-    COLOR: "orange"
-    URL: "${CI_PROJECT_URL}"
-
-badge:codestyle:
-  extends: .badge
-  variables:
-    LABEL: "codestyle"
-    VALUE: "black"
-    COLOR: "black"
-    URL: "${CI_PROJECT_URL}"
-
-### semantic-release
-
-check-GL-token:
-  rules:
-    - when: never
-
-find-next-release:
-  only:
-    - iwhishtherewasabetterway
-
-tbump:
-  rules:
-    - when: never
-
-semantic-release:
-  image: registry.gitlab.com/just-ci/images/node:latest
-  stage: .post
-  before_script:
-    - apk add python3 py-pip
-    - pip install tbump
-  script:
-    - semantic-release
+branch:
+  stage: test
+  trigger:
+    include:
+      - local: ci/branch.yaml
+    strategy: depend
   rules:
     - if: $CI_COMMIT_BRANCH
+
+release:
+  stage: build
+  trigger:
+    include:
+      - local: ci/release.yaml
+    strategy: depend
+  rules:
+    - if: $CI_COMMIT_TAG

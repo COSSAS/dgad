@@ -1,0 +1,55 @@
+include:
+  - project: 'just-ci/templates'
+    file: 'project-automation/badge.yml'
+
+prepare:badges:
+  stage: build
+  image:
+    name: alpine/git
+    entrypoint: [""]
+  script:
+    - echo "COMMITS_COUNT=$(git rev-list --all --count)" >> badges.env
+    - echo "LATEST_TAG=$(git tag | sort -g | tail -1)" >> badges.env
+  artifacts:
+    reports:
+      dotenv: badges.env
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+.badge:
+  needs: ["prepare:badges"]
+  stage: .post
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+badge:commits:
+  extends: .badge
+  variables:
+    LABEL: "commits"
+    VALUE: "${COMMITS_COUNT}"
+    COLOR: "green"
+    URL: "${CI_PROJECT_URL}"
+
+badge:version:
+  extends: .badge
+  variables:
+    LABEL: "version"
+    VALUE: "${LATEST_TAG}"
+    COLOR: "blue"
+    URL: "${CI_PROJECT_URL}"
+
+badge:license:
+  extends: .badge
+  variables:
+    LABEL: "license"
+    VALUE: "MPL2.0"
+    COLOR: "orange"
+    URL: "${CI_PROJECT_URL}"
+
+badge:codestyle:
+  extends: .badge
+  variables:
+    LABEL: "codestyle"
+    VALUE: "black"
+    COLOR: "black"
+    URL: "${CI_PROJECT_URL}"
