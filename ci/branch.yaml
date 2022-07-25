@@ -21,7 +21,6 @@ include:
   - project: 'just-ci/templates'
     file: 'python/safety.yml'
     ref: 'v5.4.0'
-  - local: 'ci/badges.yaml'
 
 variables:
   PYTHON_PACKAGE: 'dgad'
