@@ -25,6 +25,7 @@ include:
 variables:
   PYTHON_PACKAGE: 'dgad'
   KANIKO_EXTRA_ARGS: "--use-new-run --single-snapshot"
+  MYPY_EXTRA_SETTINGS: "--implicit-reexport"
 
 image:
   name: ${KANIKO_REGISTRY_IMAGE}:${KANIKO_DEV_TAG}

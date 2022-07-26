@@ -2,7 +2,7 @@ import logging
 from dataclasses import dataclass, field
 from typing import List
 
-import tldextract
+from tldextract import extract
 
 from dgad import utils
 
@@ -83,14 +83,14 @@ class Word:
 @dataclass
 class Domain:
     raw: str
-    words: List[Word] = None
+    words: List[Word] = []
     suffix: str = ""
     is_dga: bool = False
     family_label: str = "N/A"
     padded_length: int = 0
 
     def __post_init__(self) -> None:
-        raw_subdomains, raw_domain_name, self.suffix = tldextract.extract(
+        raw_subdomains, raw_domain_name, self.suffix = extract(
             utils.remove_prefix(self.raw, "www.")
         )
         raw_words = []
@@ -104,7 +104,7 @@ class Domain:
         self,
         binary_confidence_threshold: float = 0.5,
         family_confidence_threshold: float = 0,
-    ):
+    ) -> None:
         """
         sets the domain family to be the one from the word with the highest family score
         """

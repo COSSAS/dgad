@@ -8,7 +8,7 @@ import logging
 import time
 from dataclasses import asdict
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Set, Tuple
 
 import numpy as np
 from sklearn import preprocessing
@@ -44,7 +44,7 @@ def pad_vector(vector: List[int], desired_length: int) -> List[int]:
 
 
 def separate_domains_that_are_too_long(
-    domains: List[str], max_size: int
+    domains: Set[str], max_size: int
 ) -> Tuple[List[str], List[str]]:
     domains_shorter_or_equal = [domain for domain in domains if len(domain) <= max_size]
     domains_too_long = set(domains) - set(domains_shorter_or_equal)
@@ -53,7 +53,7 @@ def separate_domains_that_are_too_long(
 
 def setup_logging(
     level: str, logformat: str = "%(asctime)2s %(levelname)-8s %(message)s"
-):
+) -> None:
     numeric_level = getattr(logging, level.upper(), None)
     logging.basicConfig(level=numeric_level, format=logformat)
     logging.debug(f"logging level set to {level}")
@@ -66,29 +66,9 @@ def load_labels(encoder_path: Path) -> Dict[int, str]:
     return labels
 
 
-def log_analysis(domain) -> None:
-    """
-    reports to stdout outcome of classification
-    """
-    logging.info(
-        f"{domain.raw}, is_dga: {domain.is_dga}, family: {domain.family_label}"
-    )
-    for word in domain.words:
-        logging.debug(asdict(domain))
-
-
-def log_performance(counter, start_time):
+def log_performance(counter: int, start_time: float) -> None:
     elapsed_time = time.time() - start_time
     avg_classification_took = elapsed_time / counter
     logging.warning(
         f"classified {counter} domains, took on average: {avg_classification_took}s"
     )
-
-
-def pretty_print(domains, output_format="json") -> str:
-    dicts = [asdict(domain) for domain in domains]
-    for domain in dicts:
-        for word in domain["words"]:
-            del word["padded_token_vector"]
-    if output_format == "json":
-        print(json.dumps(dicts, indent=2))

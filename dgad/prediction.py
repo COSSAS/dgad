@@ -1,9 +1,10 @@
+import json
 import logging
 import os
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from importlib import resources
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Set, Tuple
 
 import numpy as np
 import tensorflow
@@ -12,16 +13,16 @@ from tcn import TCN
 import dgad.label_encoders
 import dgad.models
 from dgad.schema import Domain, Word
-from dgad.utils import load_labels, log_analysis, separate_domains_that_are_too_long
+from dgad.utils import load_labels, separate_domains_that_are_too_long
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
 
-def default_binary_labels():
+def default_binary_labels() -> Dict[int, str]:
     return {0: "benign", 1: "DGA"}
 
 
-def default_custom_objects():
+def default_custom_objects() -> Dict[str, str]:
     return {}
 
 
@@ -34,7 +35,7 @@ class Model:
     loss: str = "binary_crossentropy"
     custom_objects: Dict[str, str] = field(default_factory=default_custom_objects)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         self.data = tensorflow.keras.models.load_model(
             filepath=self.filepath, custom_objects={"TCN": TCN}
         )
@@ -42,7 +43,9 @@ class Model:
 
 
 class Detective:
-    def __init__(self, model_binary: Model = None, model_multi: Model = None) -> None:
+    def __init__(
+        self, model_binary: Optional[Model] = None, model_multi: Optional[Model] = None
+    ) -> None:
         # use included binary model if one is not provided
         if model_binary:
             self.model_binary = model_binary
@@ -66,7 +69,7 @@ class Detective:
                     )
 
     def prepare_domains(
-        self, raw_domains: List[str], max_length: int = 0
+        self, raw_domains: Set[str], max_length: int = 0
     ) -> Tuple[List[Domain], List[str]]:
         """
         preprocesses the domains, tokenizing and applying padding to have same size as binary model
@@ -88,13 +91,13 @@ class Detective:
         return domains_todo, domains_to_skip
 
     def investigate_binary(self, word: Word) -> None:
-        x_test: np.ndarray = np.array([word.padded_token_vector])
-        y_test: np.ndarray = self.model_binary.data.predict(x_test, verbose=0)
+        x_test = np.array([word.padded_token_vector])
+        y_test = self.model_binary.data.predict(x_test, verbose=0)
         word.binary_score = float(y_test[0][0])
         word.binary_label = self.model_binary.labels[int(np.round(word.binary_score))]
 
     def investigate_family(self, word: Word) -> None:
-        x_test: np.ndarray = np.array([word.padded_token_vector])
+        x_test = np.array([word.padded_token_vector])
         y_test = self.model_multi.data.predict(x_test, verbose=0)
         best_class_label_index = np.argmax(y_test, axis=1)[0]
         word.family_score = float(np.max(y_test, axis=1)[0])
@@ -116,4 +119,24 @@ class Detective:
             if is_dga:
                 domain.is_dga = True
                 domain.set_family()
-            log_analysis(domain)
+            log_prediction(domain)
+
+
+def log_prediction(domain: Domain) -> None:
+    """
+    reports to stdout outcome of classification
+    """
+    logging.info(
+        f"{domain.raw}, is_dga: {domain.is_dga}, family: {domain.family_label}"
+    )
+    for word in domain.words:
+        logging.debug(asdict(word))
+
+
+def pretty_print(domains: List[Domain], output_format: str = "json") -> None:
+    dicts = [asdict(domain) for domain in domains]
+    for domain in dicts:
+        for word in domain["words"]:
+            del word["padded_token_vector"]
+    if output_format == "json":
+        print(json.dumps(dicts, indent=2))

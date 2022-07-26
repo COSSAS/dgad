@@ -22,6 +22,7 @@ isort = "^5.10.1"
 pytest = "^7.1.2"
 pylint = "^2.14.5"
 grpcio-tools = "^1.47.0"
+mypy = "^0.971"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
