@@ -45,7 +45,7 @@ pip install dgad
 Otherwise, you can pull the docker image:
 
 ```bash
-docker pull registry.gitlab.com/cossas/dgad:4.1.0
+docker pull registry.gitlab.com/cossas/dgad:4.1.1
 ```
 
 ## Usage
@@ -78,7 +78,7 @@ Commands:
 
 ```
 $ dgad client -d kajsdfhasdlkjfh.com
-$ docker run -i registry.gitlab.com/cossas/dgad:4.1.0 client -d kdsjhfalksdjf.com
+$ docker run -i registry.gitlab.com/cossas/dgad:4.1.1 client -d kdsjhfalksdjf.com
 $ dgad client -d dsfjkhalsdkfj.com -o json
 $ dgad client -d wikipedia.org -d anotherdomain.com
 $ dgad client -f tests/data/domains_todo.csv --format csv
@@ -98,7 +98,7 @@ See the option `--domains_column` to set this parameter, which is `domain` by de
 $ cat tests/data/domains_todo.csv | dgad client -fmt csv -f -
 
 # this is especially  useful when using the cli through docker
-$ cat demo/domains.jsonl | docker run -i registry.gitlab.com/cossas/dgad:4.1.0 client -fmt jsonl -f -
+$ cat demo/domains.jsonl | docker run -i registry.gitlab.com/cossas/dgad:4.1.1 client -fmt jsonl -f -
 {
   "domain": "python.org",
   "is_dga": false
