@@ -83,7 +83,7 @@ class Word:
 @dataclass
 class Domain:
     raw: str
-    words: List[Word] = []
+    words: List[Word] = field(default_factory=lambda: [])
     suffix: str = ""
     is_dga: bool = False
     family_label: str = "N/A"
