@@ -1,5 +1,5 @@
 from dgad.prediction import Detective
-from dgad.utils import pretty_print
+from dgad.prediction import pretty_print
 
 mydomains = ["adslkfjhsakldjfhasdlkf.com"]
 detective = Detective()
